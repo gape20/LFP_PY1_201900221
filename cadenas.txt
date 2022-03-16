@@ -1,0 +1,17 @@
+1 cadena encontrada: etiqueta
+2 cadena encontrada: nombre:
+3 cadena encontrada: texto
+4 cadena encontrada: nombre
+5 cadena encontrada: ingrese su nombre
+6 cadena encontrada: grupo-option
+7 cadena encontrada: sexo
+8 cadena encontrada: 'masculino'
+9 cadena encontrada: 'femenino'
+10 cadena encontrada: grupo-option
+11 cadena encontrada: pais
+12 cadena encontrada: 'guatemala'
+13 cadena encontrada: 'el salvador'
+14 cadena encontrada: 'honduras'
+15 cadena encontrada: boton
+16 cadena encontrada: valor
+17 cadena encontrada: entrada		

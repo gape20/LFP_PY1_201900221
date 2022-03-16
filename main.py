@@ -3,9 +3,10 @@ from tkinter import ttk
 import os
 from tkinter import *
 from tkinter.filedialog import askopenfilename
-#from automata import leerArchivo
-#import automata
+from automata import leerArchivo
 from tkinter import messagebox
+from automata import GenerarReporteTokens
+
 
 os.system('cls')
 info = []
@@ -29,7 +30,7 @@ class interfaz:
         label1 = tk.Label(ventanaP,text='Menu Principal', font='Helvetica 40 bold', bg='deep pink')
         label1.place(x=10, y=10)
 
-        button1 = tk.Button(ventanaP, text='Analizar', font='Helvetica 20 bold', bg='deep pink')
+        button1 = tk.Button(ventanaP, text='Analizar', font='Helvetica 20 bold', command= self.Analizar, bg='deep pink')
         button1.place(x=10, y=740)
 
         button2 = tk.Button(ventanaP, text='Ir', font='Helvetica 20 bold', command= self.ObtenerItem, bg='deep pink')
@@ -42,7 +43,7 @@ class interfaz:
         button4.place(x=250, y=740)
 
         self.entradaa = tk.StringVar()
-        self.entry1 = Text(ventanaP, width=750, height=600, font='Helvetica 15')
+        self.entry1 = Text(ventanaP, width=750, height=600, font='Helvetica 13')
         self.entry1.place(x=20, y=100, width=750, height=600)
         
 
@@ -61,9 +62,10 @@ class interfaz:
         entrada = self.combo1.get()
         if entrada == 'Reporte de Tokens':
             print('Mostrando Reporte de Tokens...')
-            
+            os.system('ReporteTokens.html')
         elif entrada == 'Reporte de errores':
             print('Mostrando Reporte de errores...')
+            os.system('ReporteErrores.html')
         elif entrada == 'Manual Tecnico':
             print('Mostrando Manual Tecnico...')
         elif entrada == 'Manual de Usuario':
@@ -87,11 +89,14 @@ class interfaz:
             self.Archivo.close()
             print(self.entradaa.get())
             self.boole = True
-
         elif self.boole == True:
             messagebox.askretrycancel(message="Ya cargó un archivo previamente", title="Error")
-
-
+    
+    def Analizar(self):
+        leer = self.entry1.get("1.0","end")
+        #print(leer)
+        leerArchivo(leer)
+    
 ventanaP = tk.Tk()
 menu = interfaz(ventanaP)
 ventanaP.configure(bg='light pink')
