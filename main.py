@@ -5,8 +5,6 @@ from tkinter import *
 from tkinter.filedialog import askopenfilename
 from automata import leerArchivo
 from tkinter import messagebox
-from automata import GenerarReporteTokens
-
 
 os.system('cls')
 info = []
@@ -56,8 +54,6 @@ class interfaz:
         texto = tk.Label(ventanaP, text="Selección :")
         texto.place(x=550, y=75, width=220, height=20)
 
-        
-    
     def ObtenerItem(self):
         entrada = self.combo1.get()
         if entrada == 'Reporte de Tokens':
@@ -96,6 +92,7 @@ class interfaz:
         leer = self.entry1.get("1.0","end")
         #print(leer)
         leerArchivo(leer)
+        os.system('iframe.html')
     
 ventanaP = tk.Tk()
 menu = interfaz(ventanaP)

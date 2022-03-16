@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+
+<head>
+    <meta charset="utf-8">
+    <title>Formulario</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            margin-bottom: 20px;
+            background: #A81616;
+            box-shadow: 0px 10px 6px -4px rgba(0, 0, 0, 0.75);
+        }
+        
+        .sombra {
+            box-shadow: 0px 10px 20px -4px rgba(0, 0, 0, 0.75);
+        }
+        
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #333;
+        }
+        
+        .fondo {
+            background: #37474F;
+        }
+        
+        .b-footer {
+            background: #A81616;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            width: 650px;
+            background: #182D3E;
+            box-shadow: 0px 10px 20px -4px rgba(0, 0, 0, 0.75);
+        }
+        
+        .form1 {
+            margin-bottom: 20px;
+            background: #424242;
+            padding: 20px;
+            box-shadow: 0px 10px 20px -4px rgba(0, 0, 0, 0.75);
+            list-style: none;
+            text-decoration: none;
+        }
+        
+        .form1,
+        a:visited {
+            color: rgb(8, 8, 8);
+        }
+        
+        .img {
+            display: block;
+            margin: auto;
+        }
+        
+        footer {
+            background: #2B353A;
+            padding: 10px 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="fondo">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark ">
+            <div class="container">
+                <a class="navbar-brand">
+                    <span class="fa fa-university" aria-hidden="true"></span>LFP - Proyecto 1</a>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm-8">
+            <div class="card text-white bg-dark mb-3 sombra">
+            </div>
+            <textarea name="comentarios" rows="30" cols="100" disabled>
+                formulario ~>> [
+                <   
+                    tipo: "etiqueta",
+                    valor: "Nombre"
+                >,
+                <
+                    tipo: "texto",
+                    valor: "Nombre",
+                    fondo: "Ingrese su nombre"
+                >,
+                <
+                    tipo: "grupo-radio",
+                    valor: "sexo",
+                    valores: ['Masculino', 'Femenino']
+                >,
+                <
+                    tipo: "grupo-option",
+                    valor: "pais",
+                    valores: ['Guatemala', 'El Salvador', 'Honduras']
+                >,
+                <
+                    tipo: "boton",
+                    valor: "valor",
+                    evento: <entrada>
+                >
+            ]
+        </textarea>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+</body>
+
+<div class="b-footer">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6 text-white">
+                <label>201900221 - Gabriel Enrique Perez Meza</label>
+            </div>
+            <div class="col-6  text-white text-center">
+                <label>USAC</label>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer text-white">
+    <label>© 2021 USAC, All rights reserved.</label>
+</footer>
+
+</html>

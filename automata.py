@@ -1,14 +1,14 @@
 from Token import Tokenn
-from error import error
 from prettytable import PrettyTable
-import os
-
+from Sintactico import Sintactico
 
 
 
 Simbolos = [":", "~", "[", "]", '"', ",", ";","<",">","'"]
 PalabrasReservadas =['formulario', 'tipo', 'valor', 'fondo','valores','evento']
 Info = []
+
+
 
 def leerArchivo(Archivo):
     Estado = 0
@@ -55,11 +55,12 @@ def leerArchivo(Archivo):
         x.add_row([token.lexema, token.linea, token.columna, token.token])
     print(x)
 
+    Sintactico(Info)
     GenerarReporteTokens()
     GenerarReporteErrores()
     generariFrame()
 
-def generariFrame():    
+def generariFrame():   
     centro = """<h1><center>iFrame</center></h1>
                         <br></br>
                         <style>
@@ -68,36 +69,126 @@ def generariFrame():
                         }
                         </style>
             """
-    centro += '''
-    <h4>nombre</h4>
-                        <textarea cols="10" rows="1" style="resize: both;" placeholder="placeholder"></textarea>
-                        <br>
-                        </br>
-                        <form>
-                            <h4>Sexo</h4>
-                            <div>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="radio" id="masc" name="masc" value="masculino">
-                                <label for="masc">Masculino</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="radio" id="fem" name="masc" value="femenino">
-                                <label for="fem">Femenino</label>
-                                <br> </br>
-                                <h4>Pais</h4>
-                                <select name="select">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <option value="value1"><h1>Value 1</h1></option>
-                                    <option value="value2"><h1>Value 2</h1></option>
-                                    <option value="value3"><h1>Value 3</h1></option>
-                                    <br> </br>
-                                  </select>
-                                <br> </br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button"><h4>EVENTO</h4></button>
-                                <br> </br>
+    for ins in Sintactico.instrucciones:
+        a = ''
+        b = ''
+        c = ''
+        d = ''
+        a = str(ins[0][1])
+        b = str(ins[1][1])
+
+        caracteres = "[]'"
+        for x in range(len(caracteres)):
+            a = a.replace(caracteres[x],"")
+        c = a.replace('"',"")
+
+        if c == 'etiqueta' or c == 'label':
+            for x in range(len(caracteres)):
+                b = b.replace(caracteres[x],"")
+            d = b.replace('"',"")
+            centro += f'<h4>{d}</h4>'
+
+        elif c == 'texto' or c == 'input de tipo text':
+            e = str(ins[2][1])
+            for x in range(len(caracteres)):
+                e = e.replace(caracteres[x],"")
+            d = e.replace('"',"")
+            centro += f'<textarea cols="10" rows="1" style="resize: both;" placeholder="{d}", id = "nombre"></textarea>'
+
+        elif c == 'grupo-radio' or c == 'grupo de input de tipo radio':
+            e = str(ins[1][1])
+            for x in range(len(caracteres)):
+                e = e.replace(caracteres[x],"")
+            d = e.replace('"',"")
+            centro += f'<br> </br><form><h4>{d}</h4><div>'
+            f = ins[2][1]
+            for sexo in f:
+                str(sexo)
+                for x in range(len(caracteres)):    
+                    sexo = sexo.replace(caracteres[x],"")
+                    sexo = sexo.replace('"',"")
+                centro +=f'<input type="radio" id="masc" name="masc" value={sexo} id= "radio"><label for="sex">{sexo}</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'     
+
+        elif c == 'grupo-option' or c == 'select con respectivos option':
+            e = str(ins[1][1])
+            for x in range(len(caracteres)):
+                e = e.replace(caracteres[x],"")
+            d = e.replace('"',"")
+            centro += f'<br> </br> <h4>{d}</h4>'
+            f = ins[2][1]
+            centro += '<select name="select" id ="select1">'
+            for paises in f:
+                str(paises)
+                for x in range(len(caracteres)):    
+                    paises = paises.replace(caracteres[x],"")
+                    paises = paises.replace('"',"")
+                centro += f'<option value="value1"><h1>{paises}</h1></option>'
+            centro += '<br></br></select><br> </br>'
+        
+        elif c == 'boton' or c == 'button':
+            e = str(ins[1][1])
+            for x in range(len(caracteres)):
+                e = e.replace(caracteres[x],"")
+            d = e.replace('"',"")
+            f = ins[2][1]
+            centro += '''
+            <script>
+        function abrirIframeEntrada() {
+            var ifrm = document.createElement("iframe");
+            ifrm.setAttribute("src", "file:///E:/UNIVERSIDAD/7mo%20Semestre/LAB%20LENGUAJES/a/formulario.html");
+            ifrm.style.width = "1000px";
+            ifrm.style.height = "1000px";
+            document.body.appendChild(ifrm);
+            
+            
+        }
+    </script>
+    <script>
+            function abrirIframeInfo() {
+                                var1 = document.getElementById('nombre').value;
+                                console.log(var1)
+                                var elem2 = document.createElement('label');
+                                elem2.innerHTML = "Nombre: " + var1+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                document.getElementsByTagName('body')[0].appendChild(elem2);
+                                var sexo = document.getElementsByName('masc');
+                                for (i = 0; i < sexo.length; i++) {
+                                    if (sexo[i].checked) {
+                                        var seleccion = sexo[i].value;
+                                        console.log(seleccion)
+                                        var elem3 = document.createElement('label');
+                                        elem3.innerHTML = "Seleccion: " + seleccion +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                        document.getElementsByTagName('body')[0].appendChild(elem3);
+                                
+                                    }
+                                }
+                                var combo = document.getElementById("select1");
+                                var selected = combo.options[combo.selectedIndex].text;
+                                console.log(selected)
+                                var elem4 = document.createElement('label');
+                                elem4.innerHTML = "Seleccion: " + selected +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                document.getElementsByTagName('body')[0].appendChild(elem4);
+                        
+}       
+
+                            
+    </script>
+            
+            '''
+            for entradas in f:
+                if entradas == 'entrada':
+                    centro += f'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" onclick=abrirIframeEntrada() value ={entradas}><h4>{d}</h4></button>'
+                                    
+                elif entradas == 'info':
+                    centro += f'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" onclick=abrirIframeInfo() value ={entradas}><h4>{d}</h4></button>'
+                    
+            
+    centro+='''<br> </br>
                             </div>
                         </form>'''
+    
+          
     try:  
-            archivo = open('iframe.html', 'w')
+        archivo = open('iframe.html', 'w')
     except OSError:
                         archivo = open('iframe.html', 'w')
     head = """<!doctype html>
@@ -533,11 +624,7 @@ def ObtenerToken(lexema):
     elif lexema == 'valor':
         return 'tk_valor'
     elif lexema == 'fondo':
-        return 'tk_valor'
-    elif lexema == 'fondo':
         return 'tk_fondo'
-    elif lexema == 'nombre':
-        return 'tk_nombre'
     elif lexema == 'valores':
         return 'tk_valores'
     elif lexema == 'evento':
@@ -545,11 +632,11 @@ def ObtenerToken(lexema):
     elif lexema ==':': 
         return 'tk_dosPuntos'
     elif lexema =='~': 
-        return 'tk_GuionCurvo'
+        return 'tk_guionCurvo'
     elif lexema =='[': 
-        return 'tk_CorcheteI'
+        return 'tk_corcheteI'
     elif lexema ==']': 
-        return 'tk_CorcheteD'
+        return 'tk_corcheteD'
     elif lexema =='"': 
         return 'tk_comillas'
     elif lexema ==',': 
@@ -562,6 +649,9 @@ def ObtenerToken(lexema):
         return 'tk_menorQue'  
     elif lexema == "'":
         return "tk_comillasSimples"
+    elif lexema == 'entrada':
+        return 'tk_entrada'
+    elif lexema == 'info':
+        return 'tk_info'
     else:
         return 'tk_desconocido'
-
