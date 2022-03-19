@@ -1,6 +1,5 @@
 from Token import Tokenn
-import automata
-
+from error import error
 class Sintactico:
     actual = "tk_Desconocido"
     posicion = 0
@@ -22,7 +21,9 @@ class Sintactico:
         if self.actual.token != tokenn:
             if self.Error == False:
                 self.Error = True
+
                 print(f"Se recibio '{self.actual.lexema}' -- Se esperaba un token {str(tokenn)} -- En la linea {self.listaTokens[self.posicion].linea}")
+                
         if self.actual.token != "tk_ultimo":
             if self.actual.token == "tk_cadena" or self.actual.token == "tk_entrada" or self.actual.token == "tk_info":
                 self.acum.append(self.actual.lexema)
